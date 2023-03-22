@@ -41,19 +41,19 @@ display_data = pandas.DataFrame(my_data_rows)
 display_data.columns = ['Username', 'Origin', 'Destination', 'Budget', 'Period', 'Tier', 'E-mail', 'E-mail notification', 'Phone', 'SMS notification']
 streamlit.dataframe(display_data)
 
-if streamlit.button('Add new values'):
-    username = streamlit.text_input('Username')
-    origin = streamlit.selectbox('Origin',iata_codes)[-4:-1]
-    destination = streamlit.selectbox('Destination',iata_codes)[-4:-1]
-    budget = streamlit.number_input('Budget')
-    from_period = streamlit.number_input('From Period')
-    to_period = streamlit.number_input('To Period')
-    tier = streamlit.selectbox('Tier', ['Basic', 'Standard', 'Premium'])[0]
-    email = streamlit.text_input('E-mail')
-    email_noti = streamlit.checkbox('E-mail notification')
-    phone = streamlit.text_input('Phone')
-    sms_noti = streamlit.checkbox('SMS notification')
-    if streamlit.button('Submit'):
-        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-        insert_row_snowflake()
+#if streamlit.button('Add new values'):
+username = streamlit.text_input('Username')
+origin = streamlit.selectbox('Origin',iata_codes)[-4:-1]
+destination = streamlit.selectbox('Destination',iata_codes)[-4:-1]
+budget = streamlit.number_input('Budget')
+from_period = streamlit.number_input('From Period')
+to_period = streamlit.number_input('To Period')
+tier = streamlit.selectbox('Tier', ['Basic', 'Standard', 'Premium'])[0]
+email = streamlit.text_input('E-mail')
+email_noti = streamlit.checkbox('E-mail notification')
+phone = streamlit.text_input('Phone')
+sms_noti = streamlit.checkbox('SMS notification')
+if streamlit.button('Submit'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    insert_row_snowflake()
 
