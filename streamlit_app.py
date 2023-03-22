@@ -26,8 +26,8 @@ def insert_row_snowflake(username, origin, destination, budget, from_period, to_
 #        querry_text = ("""insert into user_preferences (USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""")
 #        record = (username, origin, destination, budget, period, tier, email, email_noti, phone, sms_noti)
         my_cur.execute(
-            "insert into user_preferences (USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI)"
-            "Values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(
+            "INSERT INTO USER_PREFERENCES(USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI, PRICE_THRESHOLD)"
+            "Values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",(
                 username, 
                 origin, 
                 destination, 
@@ -37,7 +37,8 @@ def insert_row_snowflake(username, origin, destination, budget, from_period, to_
                 email, 
                 email_noti, 
                 phone, 
-                sms_noti
+                sms_noti,
+                0
             )
         )
 
