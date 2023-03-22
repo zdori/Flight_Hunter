@@ -82,6 +82,7 @@ if is_sms_clicked:
 is_email_clicked = streamlit.button('Send Test Email')
 
 if is_email_clicked:
+    streamlit.text(email_p)
     for user in email_p:
         streamlit.text(user[0] + " " + user[4]);
         body=f"""
