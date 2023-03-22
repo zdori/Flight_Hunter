@@ -23,17 +23,7 @@ def get_iata_codes():
 def insert_row_snowflake(username, origin, destination, budget, from_period, to_period, tier, email, email_noti, phone, sms_noti):
     period = str(min(from_period,to_period)) + "," + str(max(from_period,to_period))
     with my_cnx.cursor() as my_cur:
-        my_cur.execute("insert into user_preferences (USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI) values ('"+username+"'," 
-                       + "'" + origin +"',"
-                       + "'" + destination +"',"
-                       + "'" + budget + "',"
-                       + "'" + str(period) + "',"
-                       + "'" + tier + "',"
-                       + "'" + email + "',"
-                       + "'" + email_noti + "',"
-                       + "'" + phone + "',"
-                       + "'" + sms_noti + "',"
-                       "')")
+        my_cur.execute("insert into user_preferences (USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI) values ('" + username + "'," + "'" + origin +"'," + "'" + destination +"'," + "'" + budget + "'," + "'" + str(period) + "'," + "'" + tier + "'," + "'" + email + "'," + "'" + email_noti + "'," + "'" + phone + "'," + "'" + sms_noti + "')")
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_data_rows = get_user_data()
