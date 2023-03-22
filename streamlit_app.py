@@ -3,6 +3,8 @@ import streamlit
 import pandas
 import requests
 import snowflake.connector
+from datetime import datetime, timedelta
+import time
 from urllib.error import URLError
 
 streamlit.title('Flight Hunter')
@@ -50,7 +52,7 @@ display_data = pandas.DataFrame(my_data_rows)
 display_data.columns = ['Username', 'Origin', 'Destination', 'Budget', 'Period', 'Tier', 'E-mail', 'E-mail notification', 'Phone', 'SMS notification']
 streamlit.dataframe(display_data)
 
-with streamlit.expander("See explanation"):
+with streamlit.expander("Add new Row"):
 #if streamlit.button('Add new values'):
     username = streamlit.text_input('Username')
     origin = str(streamlit.selectbox('Origin',iata_codes))[-7:-4]
@@ -66,3 +68,8 @@ with streamlit.expander("See explanation"):
     if streamlit.button('Submit'):
         my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
         insert_row_snowflake(username, origin, destination, budget, from_period, to_period, tier, email, email_noti, phone,     sms_noti)
+
+if streamlit.button('Get results'):
+    datetime.now()
+    time.sleep(5)
+    datetime.now()
