@@ -34,8 +34,8 @@ my_cnx.close()
 
 streamlit.text(my_data_rows)
 
-send_sms = set(filter(lambda row: row[3], my_data_rows))
-streamlit.dataframe(send_sms)
+user_sms = set(filter(lambda row: row[3], my_data_rows))
+streamlit.dataframe(user_sms)
 
 tier_p = set(filter(lambda row: row[1] == 'P', my_data_rows))
 streamlit.text(f'Premium users: {tier_p}')
@@ -46,9 +46,9 @@ streamlit.text(f'Standard users: {tier_s}')
 tier_b = set(filter(lambda row: row[1] == 'B', my_data_rows))
 streamlit.text(f'Basic users: {tier_b}')
 
-sms_p = send_sms.intersection(tier_p)
-sms_s = send_sms.intersection(tier_s)
-sms_b = send_sms.intersection(tier_b)
+sms_p = user_sms.intersection(tier_p)
+sms_s = user_sms.intersection(tier_s)
+sms_b = user_sms.intersection(tier_b)
 
 """
 scheduler = BlockingScheduler()
