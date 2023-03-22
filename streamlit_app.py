@@ -20,4 +20,4 @@ my_data_rows = get_user_data()
 my_cnx.close()
 display_data = pandas.DataFrame(my_data_rows)
 display_data.columns = ['Username', 'Origin', 'Destination', 'Budget', 'Period', 'Tier', 'E-mail', 'E-mail notification', 'Phone', 'SMS notification']
-streamlit.dataframe(display_data)
+streamlit.dataframe(display_data, use_container_width=True)
