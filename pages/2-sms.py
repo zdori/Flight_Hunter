@@ -36,13 +36,13 @@ send_sms = list(filter(lambda row: row[3], my_data_rows))
 streamlit.dataframe(send_sms)
 
 tier_p = list(filter(lambda row: row[1] == 'P', my_data_rows))
-streamlit.dataframe(f'Premium users: {tier_p}')
+streamlit.text(f'Premium users: {tier_p}')
 
 tier_s = list(filter(lambda row: row[1] == 'S', my_data_rows))
-streamlit.dataframe(f'Standard users: {tier_s}')
+streamlit.text(f'Standard users: {tier_s}')
 
 tier_b = list(filter(lambda row: row[1] == 'B', my_data_rows))
-streamlit.dataframe(f'Basic users: {tier_b}')
+streamlit.text(f'Basic users: {tier_b}')
 
 
 
