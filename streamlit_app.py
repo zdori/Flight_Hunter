@@ -52,9 +52,8 @@ streamlit.dataframe(display_data)
 
 #if streamlit.button('Add new values'):
 username = streamlit.text_input('Username')
-origin = streamlit.selectbox('Origin',iata_codes)
-str(origin)[-7:-3]
-destination = streamlit.selectbox('Destination',iata_codes)[-4:-1]
+origin = str(streamlit.selectbox('Origin',iata_codes))[-7:-4]
+destination = str(streamlit.selectbox('Destination',iata_codes))[-7:-4]
 budget = int(streamlit.number_input('Budget'))
 from_period = int(streamlit.number_input('From Period'))
 to_period = int(streamlit.number_input('To Period'))
