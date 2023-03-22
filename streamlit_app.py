@@ -27,7 +27,7 @@ def insert_row_snowflake(username, origin, destination, budget, from_period, to_
                        + "'" + origin +"',"
                        + "'" + destination +"',"
                        + "'" + budget + "',"
-                       + "'" + period + "',"
+                       + "'" + str(period) + "',"
                        + "'" + tier + "',"
                        + "'" + email + "',"
                        + "'" + email_noti + "',"
