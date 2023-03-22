@@ -79,13 +79,16 @@ scheduler.add_job(send_sms(sms_p), 'interval', hours=1)
 scheduler.start()
 """
 
-is_clicked = streamlit.button('Send Test SMS')
+is_sms_clicked = streamlit.button('Send Test SMS')
 
-if is_clicked:
+if is_sms_clicked:
     streamlit.text("Users with Premium tier, asking for SMS: " + sms_p)
     r = send_sms(sms_p)
     streamlit.text(f'Result: {r}')
 
+is_email_clicked = streamlit.button('Send Test Email')
+
+if is_email_clicked:
     streamlit.text("Users with Premium tier, asking for email: " + email_p)
     for user in email_p:
         streamlit.text(user[0] + " " + user[4]);
@@ -98,7 +101,6 @@ if is_clicked:
         FlightHunters
         """
         send_mail(user[4], "Your daily FlightHunter", body)
-
 
 
 
