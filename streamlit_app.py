@@ -14,27 +14,22 @@ def get_user_data():
         my_cur.execute("select username, origin, destination, max_price, period, tier, email, email_noti, phone, sms_noti from USER_PREFERENCES;")
         return my_cur.fetchall()
     
+@streamlit.cache_data   
 def get_iata_codes():
     with my_cnx.cursor() as my_cur:
         my_cur.execute("select concat(airport_name, ' (', iata_code,')') from iata_codes_table;")
         return my_cur.fetchall()
 
 def insert_row_snowflake(username, origin, destination, budget, from_period, to_period, tier, email, email_noti, phone, sms_noti):
+    period = str(min(from_period,to_period)) + "," + str(max(from_period,to_period))
+    record = (username, origin, destination, budget, period, tier, email, email_noti, phone, sms_noti)
     with my_cnx.cursor() as my_cur:
-        my_cur.execute("insert into user_preferences (USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI) values ('"+username+"'," 
-                       + "'" + origin +"',"
-                       + "'" + destination +"',"
-                       + "'" + budget + "',"
-                       + "'" + min(from_period,to_period) + "," + max(from_period,to_period) + "',"
-                       + "'" + tier + "',"
-                       + "'" + email + "',"
-                       + "'" + email_noti + "',"
-                       + "'" + phone + "',"
-                       + "'" + sms_noti + "',"
-                       "')")
+        query = ("""insert into user_preferences (USERNAME, ORIGIN, DESTINATION, MAX_PRICE, PERIOD, TIER, EMAIL, EMAIL_NOTI, PHONE, SMS_NOTI) values ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""")
+        my_cur.execute(query, record)
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_data_rows = get_user_data()
+
 iata_codes = get_iata_codes()
 my_cnx.close()
 display_data = pandas.DataFrame(my_data_rows)
