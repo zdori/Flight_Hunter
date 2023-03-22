@@ -46,9 +46,9 @@ streamlit.text(f'Standard users: {tier_s}')
 tier_b = set(filter(lambda row: row[1] == 'B', my_data_rows))
 streamlit.text(f'Basic users: {tier_b}')
 
-sms_p = send_sms.intersect(tier_p)
-sms_s = send_sms.intersect(tier_s)
-sms_b = send_sms.intersect(tier_b)
+sms_p = send_sms.intersection(tier_p)
+sms_s = send_sms.intersection(tier_s)
+sms_b = send_sms.intersection(tier_b)
 
 scheduler = BlockingScheduler()
 scheduler.add_job(send_sms(sms_p), 'interval', hours=1)
