@@ -50,5 +50,5 @@ phone = streamlit.text_input('Phone')
 sms_noti = streamlit.checkbox('SMS notification')
 if streamlit.button('Submit'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-    insert_row_snowflake()
+    insert_row_snowflake(username, origin, destination, budget, from_period, to_period, tier, email, email_noti, phone, sms_noti)
 
