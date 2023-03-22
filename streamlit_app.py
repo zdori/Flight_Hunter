@@ -27,17 +27,17 @@ def insert_row_snowflake(username, origin, destination, budget, from_period, to_
 #        record = (username, origin, destination, budget, period, tier, email, email_noti, phone, sms_noti)
         my_cur.execute(
             "INSERT INTO USER_PREFERENCES Values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",(
-                username, 
-                origin, 
-                destination, 
-                budget, 
-                period, 
-                tier, 
-                email, 
-                email_noti, 
-                phone, 
-                sms_noti,
-                0
+                str(username), 
+                str(origin), 
+                str(destination), 
+                str(budget), 
+                str(period), 
+                str(tier), 
+                str(email), 
+                str(email_noti), 
+                str(phone), 
+                str(sms_noti),
+                str(0)
             )
         )
 
