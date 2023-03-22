@@ -4,8 +4,14 @@
 import os
 import streamlit
 from twilio.rest import Client
+import snowflake.connector
 
 numbers_to_message = ['+36307763909', '+36307763909']
+
+def get_user_data():
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("select username, origin, destination, max_price from USER_PREFERENCES;")
+        return my_cur.fetchall()
 
 def send_sms(text_msg='Hello from my Twilio number!', phone_nums=numbers_to_message):
     account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
@@ -19,6 +25,13 @@ def send_sms(text_msg='Hello from my Twilio number!', phone_nums=numbers_to_mess
             to=number
         )
     return respone.status
+
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_data_rows = get_user_data()
+my_cnx.close()
+
+streamlit.text(my_data_rows)
+
 
 is_clicked = streamlit.button('Send SMS')
 
