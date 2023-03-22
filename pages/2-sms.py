@@ -32,16 +32,16 @@ my_cnx.close()
 
 streamlit.text(my_data_rows)
 
-send_sms = list(filter(lambda row: row[3], my_data_rows))
+send_sms = set(filter(lambda row: row[3], my_data_rows))
 streamlit.dataframe(send_sms)
 
-tier_p = list(filter(lambda row: row[1] == 'P', my_data_rows))
+tier_p = set(filter(lambda row: row[1] == 'P', my_data_rows))
 streamlit.text(f'Premium users: {tier_p}')
 
-tier_s = list(filter(lambda row: row[1] == 'S', my_data_rows))
+tier_s = set(filter(lambda row: row[1] == 'S', my_data_rows))
 streamlit.text(f'Standard users: {tier_s}')
 
-tier_b = list(filter(lambda row: row[1] == 'B', my_data_rows))
+tier_b = set(filter(lambda row: row[1] == 'B', my_data_rows))
 streamlit.text(f'Basic users: {tier_b}')
 
 
