@@ -5,17 +5,20 @@ import os
 import streamlit
 from twilio.rest import Client
 import snowflake.connector
-from apscheduler.schedulers.blocking import BlockingScheduler
 from email.message import EmailMessage
 import ssl
 import smtplib
-
-numbers_to_message = ['+36307763909', '+36307763909']
 
 def get_user_data():
     with my_cnx.cursor() as my_cur:
         my_cur.execute("select username, tier, email_noti, sms_noti, email, phone  from USER_PREFERENCES;")
         return my_cur.fetchall()
+
+def getUsersInTier(tier):
+    return set(filter(lambda row: row[1] == tier, my_data_rows))
+
+def getUsersFromBothCategories(first, sec):
+        first.intersection(sec)
 
 def send_sms(users):
     account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
@@ -56,43 +59,32 @@ user_email = set(filter(lambda row: row[2], my_data_rows))
 
 streamlit.dataframe(user_sms)
 
-tier_p = set(filter(lambda row: row[1] == 'P', my_data_rows))
-streamlit.text(f'Premium users: {tier_p}')
+tier_p = getUsersInTier('P')
+tier_s = getUsersInTier('S')
+tier_b = getUsersInTier('B') 
 
-tier_s = set(filter(lambda row: row[1] == 'S', my_data_rows))
-streamlit.text(f'Standard users: {tier_s}')
+sms_p = getUsersFromBothCategories(user_sms, tier_p)
+sms_s = getUsersFromBothCategories(user_sms, tier_s)
+sms_b = getUsersFromBothCategories(user_sms, tier_b)
 
-tier_b = set(filter(lambda row: row[1] == 'B', my_data_rows))
-streamlit.text(f'Basic users: {tier_b}')
+email_p = getUsersFromBothCategories(user_email, tier_p)
+email_s = getUsersFromBothCategories(user_email, tier_s)
+email_b = getUsersFromBothCategories(user_email, tier_b)
 
-sms_p = user_sms.intersection(tier_p)
-sms_s = user_sms.intersection(tier_s)
-sms_b = user_sms.intersection(tier_b)
-
-email_p = user_email.intersection(tier_p)
-email_s = user_email.intersection(tier_s)
-email_b = user_email.intersection(tier_b)
-
-"""
-scheduler = BlockingScheduler()
-scheduler.add_job(send_sms(sms_p), 'interval', hours=1)
-scheduler.start()
-"""
 
 is_sms_clicked = streamlit.button('Send Test SMS')
 
 if is_sms_clicked:
-   # streamlit.text("Users with Premium tier, asking for SMS: " + sms_p)
     r = send_sms(sms_p)
     streamlit.text(f'Result: {r}')
+
 
 is_email_clicked = streamlit.button('Send Test Email')
 
 if is_email_clicked:
-   # streamlit.text("Users with Premium tier, asking for email: " + email_p)
     for user in email_p:
         streamlit.text(user[0] + " " + user[4]);
-        body="""
+        body=f"""
         Hi {user[0]}!
 
         These are the flights we found for you: 
@@ -101,6 +93,7 @@ if is_email_clicked:
         FlightHunters
         """
         send_mail(user[4], "Your daily FlightHunter", body)
+
 
 
 
