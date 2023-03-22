@@ -18,7 +18,6 @@ def get_user_data():
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_data_rows = get_user_data()
 my_cnx.close()
-display_data = pandas.DataFrame()
+display_data = pandas.DataFrame(my_data_rows)
 display_data.columns = ['Username', 'Origin', 'Destination', 'Budget']
-display_data.add(my_data_rows)
 streamlit.dataframe(display_data)
