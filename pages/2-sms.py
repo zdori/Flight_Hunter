@@ -18,7 +18,7 @@ def send_sms(users):
     account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
     auth_token = "74fccbb9d92c786a8da4195048cc541a"
     client = Client(account_sid, auth_token)
-    for user in enumerate(users):
+    for user in users:
         text_msg = f'Hi, s{user[0]}!'
         streamlit.text(text_msg)
         respone = client.messages.create(
@@ -60,12 +60,6 @@ is_clicked = streamlit.button('Send Test SMS')
 
 if is_clicked:
     streamlit.text(sms_p)
-    streamlit.text(sms_p[0][0])
-    streamlit.text(sms_p[0][1])
-    streamlit.text(sms_p[0][2])
-    streamlit.text(sms_p[0][3])
-    streamlit.text(sms_p[0][4])
-    streamlit.text(sms_p[0][5])
     r = send_sms(sms_p)
     streamlit.text(f'Result: {r}')
 
