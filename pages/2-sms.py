@@ -9,7 +9,7 @@ numbers_to_message = ['+36307763909', '+36307763909']
 
 def send_sms(text_msg='Hello from my Twilio number!', phone_nums=numbers_to_message):
     account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
-    auth_token = "04de24d74d6f0604183af074d083b1f2"
+    auth_token = "74fccbb9d92c786a8da4195048cc541a"
     client = Client(account_sid, auth_token)
     for ind,number in enumerate(phone_nums):
         print(f'{ind}: {number}')
