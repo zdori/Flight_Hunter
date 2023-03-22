@@ -20,7 +20,7 @@ def send_sms(users):
     client = Client(account_sid, auth_token)
     for user in enumerate(users):
         text_msg = f'Hi, s{user[0]}!'
-        print(text_msg)
+        streamlit.text(text_msg)
         respone = client.messages.create(
             body=text_msg,
             from_='+15155828709',
@@ -50,10 +50,11 @@ sms_p = send_sms.intersection(tier_p)
 sms_s = send_sms.intersection(tier_s)
 sms_b = send_sms.intersection(tier_b)
 
+"""
 scheduler = BlockingScheduler()
 scheduler.add_job(send_sms(sms_p), 'interval', hours=1)
 scheduler.start()
-
+"""
 
 is_clicked = streamlit.button('Send Test SMS')
 
