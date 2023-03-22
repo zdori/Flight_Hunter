@@ -5,6 +5,7 @@ import os
 import streamlit
 from twilio.rest import Client
 import snowflake.connector
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 numbers_to_message = ['+36307763909', '+36307763909']
 
@@ -13,16 +14,17 @@ def get_user_data():
         my_cur.execute("select username, tier, email_noti, sms_noti, email, phone  from USER_PREFERENCES;")
         return my_cur.fetchall()
 
-def send_sms(text_msg='Hello from my Twilio number!', phone_nums=numbers_to_message):
+def send_sms(users):
     account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
     auth_token = "74fccbb9d92c786a8da4195048cc541a"
     client = Client(account_sid, auth_token)
-    for ind,number in enumerate(phone_nums):
-        print(f'{ind}: {number}')
+    for user in enumerate(users):
+        text_msg = f'Hi, {user[0]!}'
+        print(text_msg)
         respone = client.messages.create(
             body=text_msg,
             from_='+15155828709',
-            to=number
+            to=user[5]
         )
     return respone.status
 
@@ -44,13 +46,19 @@ streamlit.text(f'Standard users: {tier_s}')
 tier_b = set(filter(lambda row: row[1] == 'B', my_data_rows))
 streamlit.text(f'Basic users: {tier_b}')
 
+sms_p = send_sms.intersect(tier_p)
+sms_s = send_sms.intersect(tier_s)
+sms_b = send_sms.intersect(tier_b)
 
+scheduler = BlockingScheduler()
+scheduler.add_job(send_sms(sms_p), 'interval', hours=1)
+scheduler.start()
 
 
 is_clicked = streamlit.button('Send Test SMS')
 
 if is_clicked:
-    r = send_sms('Hello, Bob!', ['+36307763909', '+36307763909'])
+    r = send_sms(sms_p)
     streamlit.text(f'Result: {r}')
 
 
