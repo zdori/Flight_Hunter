@@ -59,6 +59,13 @@ scheduler.start()
 is_clicked = streamlit.button('Send Test SMS')
 
 if is_clicked:
+    streamlit.text(sms_p)
+    streamlit.text(sms_p[0][0])
+    streamlit.text(sms_p[0][1])
+    streamlit.text(sms_p[0][2])
+    streamlit.text(sms_p[0][3])
+    streamlit.text(sms_p[0][4])
+    streamlit.text(sms_p[0][5])
     r = send_sms(sms_p)
     streamlit.text(f'Result: {r}')
 
