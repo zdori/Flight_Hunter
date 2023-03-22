@@ -45,9 +45,9 @@ streamlit.dataframe(display_data)
 username = streamlit.text_input('Username')
 origin = streamlit.selectbox('Origin',iata_codes)[-4:-1]
 destination = streamlit.selectbox('Destination',iata_codes)[-4:-1]
-budget = streamlit.number_input('Budget')
-from_period = streamlit.number_input('From Period')
-to_period = streamlit.number_input('To Period')
+budget = int(streamlit.number_input('Budget'))
+from_period = int(streamlit.number_input('From Period'))
+to_period = int(streamlit.number_input('To Period'))
 tier = streamlit.selectbox('Tier', ['Basic', 'Standard', 'Premium'])[0]
 email = streamlit.text_input('E-mail')
 email_noti = streamlit.checkbox('E-mail notification')
