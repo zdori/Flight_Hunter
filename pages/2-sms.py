@@ -19,7 +19,7 @@ def send_sms(users):
     auth_token = "74fccbb9d92c786a8da4195048cc541a"
     client = Client(account_sid, auth_token)
     for user in enumerate(users):
-        text_msg = f'Hi, {user[0]!}'
+        text_msg = f'Hi, s{user[0]}!'
         print(text_msg)
         respone = client.messages.create(
             body=text_msg,
