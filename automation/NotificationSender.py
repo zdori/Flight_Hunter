@@ -1,9 +1,7 @@
 from email.message import EmailMessage
 import ssl
 import smtplib
-from twilio.rest import Client
-import snowflake.connector
-import os
+#from twilio.rest import Client
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.asymmetric import dsa
@@ -15,17 +13,17 @@ class NotificationSender(object):
         self.user_data = user_data
         self.api_suggestion = api_suggestion
     
-    def send_sms(self):
-        account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
-        auth_token = "74fccbb9d92c786a8da4195048cc541a"
-        client = Client(account_sid, auth_token)
-        text_msg = f'Hi, {self.user_data.username}!'
-        respone = client.messages.create(
-            body = text_msg,
-            from_ = '+15155828709',
-            to = self.user_data.phone
-        )
-        return respone.status
+   # def send_sms(self):
+   #     account_sid = "AC758e32bf8cfd2a044eb06fda71874bbc"
+   #     auth_token = "74fccbb9d92c786a8da4195048cc541a"
+   #     client = Client(account_sid, auth_token)
+   #     text_msg = f'Hi, {self.user_data.username}!'
+   #     respone = client.messages.create(
+   #     body = text_msg,
+   #         from_ = '+15155828709',
+   #         to = self.user_data.phone
+   #     )
+   #     return respone.status
     
     def send_mail(self, subject, body):
         email_sender = 'SchemaFlightHunters@gmail.com'
